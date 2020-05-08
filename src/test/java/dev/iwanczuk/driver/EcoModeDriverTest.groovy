@@ -11,6 +11,7 @@ class EcoModeDriverTest extends Specification {
     def "should upshift correctly" () {
         given: ""
             def driver = setupGearboxDriver(Mode.ECO, State.DRIVE, 1, 2000)
+            EcoModeDriver.withGearbox(DriveStateGearbox.onGear(1)).with
         when:
             driver.manageGearbox()
         then:
@@ -34,6 +35,32 @@ class EcoModeDriverTest extends Specification {
         def gearboxState = new GearboxCurrentState(state, gear)
         def externalSystemsState = new ExternalSystemsCurrentState(rpm)
         return DriverFactory.getDriver(driverConfiguration, gearboxState, externalSystemsState)
+    }
+
+    class EcoModeDriver {
+
+        private DriverConfiguration driverConf = new DriverConfiguration(Mode.ECO)
+        def gearbox = new GearboxCurrentState(state, gear)
+        def externalSystems = new ExternalSystemsCurrentState(rpm)
+
+        static EcoModeDriver withGearbox(GearboxCurrentState gearbox) {
+            return new EcoModeDriver()
+        }
+
+        static EcoModeDriver withExternalSystems(ExternalSystemsCurrentState externalSystems) {
+            return DriverFactory.getDriver(, gearbox, externalSystemsState)
+        }
+
+        static get() {
+
+        }
+    }
+
+    class DriveStateGearbox {
+
+        static GearboxCurrentState onGear(def gear) {
+            return new GearboxCurrentState(State.DRIVE, gear)
+        }
     }
 
 }
