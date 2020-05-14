@@ -1,4 +1,4 @@
-package dev.iwanczuk.driver.external;
+package dev.iwanczuk.driver.exception;
 
 public class ExternalSystemsException extends RuntimeException {
 

@@ -1,4 +1,4 @@
-package dev.iwanczuk.driver.gearbox;
+package dev.iwanczuk.driver.exception;
 
 public class GearboxException extends RuntimeException {
 

@@ -7,7 +7,7 @@ public class ExternalSystems {
     private double angularSpeed = 150;
     private Lights lights = new Lights();
 
-    //pozwoliłem dodoać sobie modyfikator dostępu, wydaje mi się że powinien on tutaj być w przypadku udostępnionego api :P
+    //pozwoliłem dodoać sobie publiczny modyfikator dostępu, wydaje mi się że powinien on tutaj być w przypadku udostępnionego api :P
     public ExternalSystems() {
 
     }
