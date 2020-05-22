@@ -32,7 +32,7 @@ class GasPosition {
 		return position > doubleKickDownTh;
 	}
 
-	double getValue() {
+	double getValueAsDouble() {
 		return position;
 	}
 

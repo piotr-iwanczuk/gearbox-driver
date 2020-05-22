@@ -22,24 +22,24 @@ class Rpm {
 		return new Rpm(rpm * factor);
 	}
 
-	double getValue() {
+	double getValueAsDouble() {
 		return rpm;
 	}
 
 	boolean isBelow(Rpm rpmToCompare) {
-		return rpm < rpmToCompare.getValue();
+		return rpm < rpmToCompare.getValueAsDouble();
 	}
 
 	boolean isAbove(Rpm rpmToCompare) {
-		return rpm > rpmToCompare.getValue();
+		return rpm > rpmToCompare.getValueAsDouble();
 	}
 
 	boolean isBelowRange(RpmConfig range) {
-		return rpm < range.getLowerRpm().getValue();
+		return rpm < range.getLowerRpm().getValueAsDouble();
 	}
 
 	boolean isAboveRange(RpmConfig range) {
-		return rpm > range.getUpperRpm().getValue();
+		return rpm > range.getUpperRpm().getValueAsDouble();
 	}
 
 }

@@ -10,16 +10,17 @@ class DriverEco extends Driver {
 	@Override
 	Gear calculate(GearboxState gearbox, ExternalSystemsState externalSystems) {
 		Gear currentGear = gearbox.gear;
+		GearRange range = gearbox.range;
 		Rpm currentRpm = externalSystems.rpm;
 		boolean isTrailerAttached = externalSystems.isTrailerAttached;
 		CarLevel carLevel = externalSystems.carLevel;
 
-		if (shouldUpshift(currentRpm) && currentGear.canUpshift()) {
-			return currentGear.getNext();
+		if (shouldUpshift(currentRpm)) {
+			return range.next(currentGear);
 		}
 
-		if (shouldDownshift(currentRpm, isTrailerAttached, carLevel) && currentGear.canDownshift()) {
-			return currentGear.getPrevious();
+		if (shouldDownshift(currentRpm, isTrailerAttached, carLevel)) {
+			return range.previous(currentGear);
 		}
 
 		return currentGear;

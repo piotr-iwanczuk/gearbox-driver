@@ -2,6 +2,7 @@ package dev.iwanczuk.driver;
 
 import dev.iwanczuk.driver.dto.AggressiveMode;
 import dev.iwanczuk.driver.dto.GearboxDriverMode;
+import dev.iwanczuk.driver.dto.GearboxDriverState;
 
 class DriverConf {
 
@@ -28,9 +29,9 @@ class DriverConf {
 	}
 
 	int calculate() {
-		GearboxState gearbox = new GearboxState(Gear.of(gear));
+		GearboxState gearbox = new GearboxState(GearboxMode.DRIVE, Gear.of(gear), GearRange.of(1, 8));
 		ExternalSystemsState externalSystems = new ExternalSystemsState(Rpm.of(rpm), GasPosition.of(gasPosition), CarLevel.of(level), isDrifting, isTrailerAttached);
-		return driver.calculate(gearbox, externalSystems).getValue();
+		return driver.calculate(gearbox, externalSystems).getValueAsInt();
 	}
 
 	static final class Builder {
@@ -45,7 +46,7 @@ class DriverConf {
 		private boolean isTrailerAttached = false;
 
 		Builder(GearboxDriverMode mode) {
-			gearboxDriverMode = mode;
+			this.gearboxDriverMode = mode;
 		}
 
 		Builder onGear(int gear) {
@@ -94,7 +95,7 @@ class DriverConf {
 		}
 
 		DriverConf build() {
-			Driver driver = DriverFactory.getDriver(new GearboxDriverState(gearboxDriverMode, aggressiveMode, isMDynamicMode));
+			Driver driver = DriverFactory.getDriver(GearboxDriverState.of(gearboxDriverMode, aggressiveMode, isMDynamicMode));
 			return new DriverConf(driver, gear, rpm, gasPosition, level, isDrifting, isTrailerAttached);
 		}
 	}

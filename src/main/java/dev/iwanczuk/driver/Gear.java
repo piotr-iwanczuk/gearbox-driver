@@ -5,62 +5,40 @@ import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode
 class Gear {
-	private final GearboxMode mode;
 	private final int gear;
 
-	private Gear(GearboxMode mode, int gear) {
-		if (!mode.isInCorrectRange(gear)) {
-			throw new GearException("Incorrect gear!");
+	private Gear(int gear) {
+		if (gear < 0) {
+			throw new GearException("Gear cannot be less than 0!");
 		}
 		this.gear = gear;
-		this.mode = mode;
 	}
 
 	static Gear of(int gear) {
-		return new Gear(GearboxMode.DRIVE, gear);
+		return new Gear(gear);
 	}
 
-	static Gear revers() {
-		return new Gear(GearboxMode.REVERSE, -1);
-	}
-
-	static Gear park() {
-		return new Gear(GearboxMode.PARK, 0);
-	}
-
-	static Gear neutral() {
-		return new Gear(GearboxMode.NEUTRAL, 0);
-	}
-
-	int getValue() {
+	int getValueAsInt() {
 		return gear;
 	}
 
-	GearboxMode getMode() {
-		return mode;
-	}
-
-	Gear getNext() {
+	Gear next() {
 		return Gear.of(gear + 1);
 	}
 
-	Gear getPrevious() {
+	Gear previous() {
 		return Gear.of(gear - 1);
 	}
 
-	boolean canUpshift() {
-		return canSetGear(gear + 1);
+	Gear doublePrevious() {
+		return Gear.of(gear - 2);
 	}
 
-	boolean canDownshift() {
-		return canSetGear(gear - 1);
+	boolean isGreaterThan(Gear gear) {
+		return gear.getValueAsInt() < this.gear;
 	}
 
-	boolean canDoubleDownshift() {
-		return canSetGear(gear - 2);
-	}
-
-	private boolean canSetGear(int gear) {
-		return mode.isInCorrectRange(gear);
+	boolean isLowerThan(Gear gear) {
+		return gear.getValueAsInt() > this.gear;
 	}
 }

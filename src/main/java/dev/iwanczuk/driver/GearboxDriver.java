@@ -1,5 +1,6 @@
 package dev.iwanczuk.driver;
 
+import dev.iwanczuk.driver.dto.GearboxDriverState;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -11,7 +12,7 @@ public class GearboxDriver {
 	public void manageGear() {
 		if (isDriveMode()) {
 			Driver calculator = DriverFactory.getDriver(driverState);
-			Gear calculatedGear = calculator.calculate(gearbox.getCurrentState(), externalSystems.getCurrentState());
+			Gear calculatedGear = calculator.calculate(gearbox.currentState(), externalSystems.getCurrentState());
 			gearbox.changeGear(calculatedGear);
 		}
 	}
@@ -41,6 +42,6 @@ public class GearboxDriver {
 	}
 
 	private boolean isDriveMode() {
-		return GearboxMode.DRIVE.equals(gearbox.getCurrentMode());
+		return GearboxMode.DRIVE.equals(gearbox.currentMode());
 	}
 }

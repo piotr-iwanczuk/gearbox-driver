@@ -10,21 +10,22 @@ class DriverSport extends Driver {
 	@Override
 	Gear calculate(GearboxState gearbox, ExternalSystemsState externalSystems) {
 		Gear currentGear = gearbox.gear;
+		GearRange range = gearbox.range;
 		Rpm currentRpm = externalSystems.rpm;
 		GasPosition gasPosition = externalSystems.gasPosition;
 		boolean isTrailerAttached = externalSystems.isTrailerAttached;
 		CarLevel carLevel = externalSystems.carLevel;
 
-		if (shouldUpshift(currentRpm, gasPosition) && currentGear.canUpshift()) {
-			return currentGear.getNext();
+		if (shouldUpshift(currentRpm, gasPosition)) {
+			return range.next(currentGear);
 		}
 
-		if (shouldDoubleDownshift(currentRpm, gasPosition) && currentGear.canDoubleDownshift()) {
-			return currentGear.getPrevious().getPrevious();
+		if (shouldDoubleDownshift(currentRpm, gasPosition)) {
+			return range.doublePrevious(currentGear);
 		}
 
-		if (shouldDownshift(currentRpm, gasPosition, isTrailerAttached, carLevel) && currentGear.canDownshift()) {
-			return currentGear.getPrevious();
+		if (shouldDownshift(currentRpm, gasPosition, isTrailerAttached, carLevel)) {
+			return range.previous(currentGear);
 		}
 
 		return currentGear;
